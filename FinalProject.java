@@ -4,7 +4,11 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
 import java.awt.Color;
+
+import java.awt.geom.Line2D;
 import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import javax.swing.JFileChooser;
@@ -12,7 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 class FinalProject extends Frame {
 	BufferedImage image;
-
+	ArrayList<Line2D.Double> lines;
+	Random random;
 	static int width = 1280;
 	static int height = 800;
 
@@ -42,23 +47,18 @@ class FinalProject extends Frame {
 
 	public void paint() {
 		System.out.println("Calling paint...");
-		ArrayList<Line> lines = generateStrokes(image);
-		for (Line line : lines) {
-			System.out.println(line);
-		}
+		generateStrokes(image);
 		System.out.println("Paint completed.");
 	}
 
-	private ArrayList<Line> generateStrokes(BufferedImage img) {
+	private void generateStrokes(BufferedImage img) {
 		System.out.println("Generating strokes...");
-		ArrayList<Line> lines = new ArrayList<Line>(25);
-		for (int x = 0; x < 5; x++) {
-			for (int y = 0; x < 5; y++) {
-				lines.add(new Line(x, y, x + 5, y + 5, new Color(100, 100, 100)));
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
+				System.out.println("pixel");
 			}
 		}
 		System.out.println("Strokes generated.");
-		return lines;
 	}
 
 	public static void main(String[] args) {
