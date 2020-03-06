@@ -47,18 +47,24 @@ class FinalProject extends Frame {
 
 	public void paint() {
 		System.out.println("Calling paint...");
-		generateStrokes(image);
+		ArrayList<Line> lines = generateStrokes(image);
+		for (Line line : lines) {
+			System.out.println(line);
+		}
 		System.out.println("Paint completed.");
 	}
 
-	private void generateStrokes(BufferedImage img) {
+	private ArrayList<Line> generateStrokes(BufferedImage img) {
 		System.out.println("Generating strokes...");
+		ArrayList<Line> lines = new ArrayList<Line>();
 		for (int x = 0; x < img.getWidth(); x++) {
 			for (int y = 0; y < img.getHeight(); y++) {
 				System.out.println("pixel");
+				lines.add(new Line(x, y, x + 5, y + 5, new Color(100, 100, 100)));
 			}
 		}
 		System.out.println("Strokes generated.");
+		return lines;
 	}
 
 	public static void main(String[] args) {
