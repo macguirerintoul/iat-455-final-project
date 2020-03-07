@@ -10,8 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Timer;
-
 import javax.imageio.ImageIO;
 
 class FinalProject extends Frame {
@@ -20,6 +18,11 @@ class FinalProject extends Frame {
 	Random random = new Random();
 	int width;
 	int height;
+	double maxStrokeRadius = 8;
+	double minStrokeRadius = 4;
+	double maxSrokeAngle = 90;
+	double minStrokeAngle = 0;
+	int pixelInterval = 4;
 
 	public FinalProject() {
 		try {
@@ -54,11 +57,15 @@ class FinalProject extends Frame {
 		System.out.println("Paint completed.");
 	}
 
+	public double randomDoubleBetween(double min, double max) {
+		return random.nextDouble() * (max - min) + min;
+	}
+
 	private void drawLines(ArrayList<Line> lines, Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		for (Line line : lines) {
 			g2.setColor(line.color);
-			g2.setStroke(new BasicStroke(random.nextInt(10)));
+			g2.setStroke(new BasicStroke((int) randomDoubleBetween(minStrokeRadius, maxStrokeRadius)));
 			g2.drawLine((int) line.x1, (int) line.y1, (int) line.x2, (int) line.y2);
 		}
 	}
@@ -67,8 +74,8 @@ class FinalProject extends Frame {
 		System.out.println("Generating strokes...");
 		ArrayList<Line> lines = new ArrayList<Line>();
 
-		for (int x = 0; x < width; x = x + 4) {
-			for (int y = 0; y < height; y = y + 4) {
+		for (int x = 0; x < width; x = x + pixelInterval) {
+			for (int y = 0; y < height; y = y + pixelInterval) {
 				try {
 					// 0 degree angle is vertical
 					int angleInDegrees = 60 - random.nextInt(30);
@@ -80,7 +87,6 @@ class FinalProject extends Frame {
 				} catch (Exception e) {
 					// print exception
 				}
-
 			}
 		}
 		System.out.println("Strokes generated.");
