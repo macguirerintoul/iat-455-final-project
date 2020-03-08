@@ -18,8 +18,8 @@ class FinalProject extends Frame {
 	int height;
 	boolean isOrientationByGradient = true;
 	boolean isDebugMode = false;
-	double maxStrokeRadius = 10;
-	double minStrokeRadius = 5;
+	double maxStrokeRadius = 12;
+	double minStrokeRadius = 4;
 	double maxStrokeLength = 12;
 	double minStrokeLength = 4;
 	double maxSrokeAngle = 60;
@@ -41,29 +41,29 @@ class FinalProject extends Frame {
 			width = image.getWidth();
 			height = image.getHeight();
 			this.setSize(width, height);
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			System.out.println("Cannot load the provided image");
 		}
 		this.setTitle("Final Project");
 		this.setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(final WindowEvent e) {
 				System.exit(0);
 			}
 		});
 	}
 
-	public void paint(Graphics g) {
+	public void paint(final Graphics g) {
 		System.out.println("Calling paint...");
-		ArrayList<Line> lines = generateStrokes(image);
+		final ArrayList<Line> lines = generateStrokes(image);
 		Utilities.shuffle(lines);
 		drawLines(lines, g);
 		System.out.println("Paint completed.");
 	}
 
-	private void drawLines(ArrayList<Line> lines, Graphics g) {
-		Graphics2D g2 = (Graphics2D) g;
-		for (Line line : lines) {
+	private void drawLines(final ArrayList<Line> lines, final Graphics g) {
+		final Graphics2D g2 = (Graphics2D) g;
+		for (final Line line : lines) {
 			g2.setColor(line.color);
 			g2.setStroke(new BasicStroke((int) ut.randomDoubleBetween(minStrokeRadius, maxStrokeRadius),
 					BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -78,14 +78,14 @@ class FinalProject extends Frame {
 		}
 	}
 
-	private ArrayList<Line> generateStrokes(BufferedImage img) {
+	private ArrayList<Line> generateStrokes(final BufferedImage img) {
 		System.out.println("Generating strokes...");
-		ArrayList<Line> lines = new ArrayList<Line>();
+		final ArrayList<Line> lines = new ArrayList<Line>();
 
 		for (int x = 0; x < width; x = x + pixelInterval) {
 			for (int y = 0; y < height; y = y + pixelInterval) {
 				try {
-					double length = ut.randomDoubleBetween(minStrokeLength, maxStrokeLength);
+					final double length = ut.randomDoubleBetween(minStrokeLength, maxStrokeLength);
 					float angle;
 					double angleInDegrees;
 					if (isOrientationByGradient) {
@@ -96,10 +96,10 @@ class FinalProject extends Frame {
 					}
 					angle = (float) Math.toRadians(angleInDegrees);
 
-					int endX = (int) (x + length * Math.sin(angle));
-					int endY = (int) (y + length * Math.cos(angle));
+					final int endX = (int) (x + length * Math.sin(angle));
+					final int endY = (int) (y + length * Math.cos(angle));
 					lines.add(new Line(x, y, endX, endY, new Color(image.getRGB(x, y))));
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					// print exception
 				}
 			}
@@ -108,7 +108,7 @@ class FinalProject extends Frame {
 		return lines;
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		System.out.println("Calling main...");
 		new FinalProject();
 	}
