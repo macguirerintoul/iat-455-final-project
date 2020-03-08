@@ -18,10 +18,12 @@ class FinalProject extends Frame {
 	Random random = new Random();
 	int width;
 	int height;
-	double maxStrokeRadius = 8;
+	double maxStrokeRadius = 12;
 	double minStrokeRadius = 4;
-	double maxSrokeAngle = 90;
-	double minStrokeAngle = 0;
+	double maxStrokeLength = 8;
+	double minStrokeLength = 1;
+	double maxSrokeAngle = 60;
+	double minStrokeAngle = 30;
 	int pixelInterval = 4;
 
 	public FinalProject() {
@@ -78,9 +80,9 @@ class FinalProject extends Frame {
 			for (int y = 0; y < height; y = y + pixelInterval) {
 				try {
 					// 0 degree angle is vertical
-					int angleInDegrees = 60 - random.nextInt(30);
-					int length = 10;
-					float angle = (float) ((360 - angleInDegrees) * Math.PI / 180);
+					double angleInDegrees = randomDoubleBetween(minStrokeAngle, maxSrokeAngle);
+					double length = randomDoubleBetween(minStrokeLength, maxStrokeLength);
+					float angle = (float) (angleInDegrees * Math.PI / 180);
 					int endX = (int) (x + length * Math.sin(angle));
 					int endY = (int) (y + length * Math.cos(angle));
 					lines.add(new Line(x, y, endX, endY, new Color(image.getRGB(x, y))));
