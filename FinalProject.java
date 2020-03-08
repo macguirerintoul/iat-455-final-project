@@ -18,8 +18,8 @@ class FinalProject extends Frame {
 	int height;
 	boolean isOrientationByGradient = true;
 	boolean isDebugMode = false;
-	double maxStrokeRadius = 8;
-	double minStrokeRadius = 4;
+	double maxStrokeRadius = 10;
+	double minStrokeRadius = 5;
 	double maxStrokeLength = 12;
 	double minStrokeLength = 4;
 	double maxSrokeAngle = 60;
@@ -56,6 +56,7 @@ class FinalProject extends Frame {
 	public void paint(Graphics g) {
 		System.out.println("Calling paint...");
 		ArrayList<Line> lines = generateStrokes(image);
+		Utilities.shuffle(lines);
 		drawLines(lines, g);
 		System.out.println("Paint completed.");
 	}
@@ -64,7 +65,8 @@ class FinalProject extends Frame {
 		Graphics2D g2 = (Graphics2D) g;
 		for (Line line : lines) {
 			g2.setColor(line.color);
-			g2.setStroke(new BasicStroke((int) ut.randomDoubleBetween(minStrokeRadius, maxStrokeRadius)));
+			g2.setStroke(new BasicStroke((int) ut.randomDoubleBetween(minStrokeRadius, maxStrokeRadius),
+					BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 			g2.drawLine((int) line.x1, (int) line.y1, (int) line.x2, (int) line.y2);
 
 			if (isDebugMode) {

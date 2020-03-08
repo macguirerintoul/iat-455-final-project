@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -8,6 +9,12 @@ class Utilities {
 
 	public double randomDoubleBetween(double min, double max) {
 		return random.nextDouble() * (max - min) + min;
+	}
+
+	// Generic function to randomize a list using Collections.shuffle() in Java
+	// https://www.techiedelight.com/shuffle-randomize-list-java/
+	public static <T> void shuffle(ArrayList<T> list) {
+		Collections.shuffle(list);
 	}
 
 	double colorDistance(Color c1, Color c2) {
@@ -41,7 +48,7 @@ class Utilities {
 		System.out.println("Starting pixel " + x + ", " + y);
 		for (int i = 0; i < pixels.size(); i++) {
 			double distance = colorDistance(new Color(img.getRGB(x, y)), new Color(pixels.get(i)));
-			System.out.println(i + ": " + distance);
+			// System.out.println(i + ": " + distance);
 			// if this pixel's distance is smaller than the current lowest distance...
 			if (distance < lowestDistance) {
 				// set the new record for lowest distance
@@ -49,47 +56,47 @@ class Utilities {
 				// keep track of this pixel's location
 
 				closestPixel = i;
-				System.out.println("Pixel " + closestPixel + " was closer");
+				// System.out.println("Pixel " + closestPixel + " was closer");
 			}
 		}
 
-		System.out.println("Closest pixel: " + closestPixel);
+		// System.out.println("Closest pixel: " + closestPixel);
 		double angle = 0;
 		switch (closestPixel) {
 			case 0:
-				System.out.println("Closest pixel was top left");
+				// System.out.println("Closest pixel was top left");
 				angle = -135;
 				break;
 			case 1:
-				System.out.println("Closest pixel was top middle");
+				// System.out.println("Closest pixel was top middle");
 				angle = 180;
 				break;
 			case 2:
-				System.out.println("Closest pixel was top right");
+				// System.out.println("Closest pixel was top right");
 				angle = 135;
 				break;
 			case 3:
-				System.out.println("Closest pixel was left");
+				// System.out.println("Closest pixel was left");
 				angle = -90;
 				break;
 			case 4:
-				System.out.println("Closest pixel was right");
+				// System.out.println("Closest pixel was right");
 				angle = 90;
 				break;
 			case 5:
-				System.out.println("Closest pixel was bottom left");
+				// System.out.println("Closest pixel was bottom left");
 				angle = -45;
 				break;
 			case 6:
-				System.out.println("Closest pixel was bottom");
+				// System.out.println("Closest pixel was bottom");
 				angle = 0;
 				break;
 			case 7:
-				System.out.println("Closest pixel was bottom right");
+				// System.out.println("Closest pixel was bottom right");
 				angle = 45;
 				break;
 			default:
-				System.out.println("Colour detection failed.");
+				// System.out.println("Colour detection failed.");
 				break;
 		}
 		// return 30;
