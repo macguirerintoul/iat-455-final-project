@@ -17,18 +17,19 @@ class FinalProject extends Frame {
 	int width;
 	int height;
 	boolean isOrientationByGradient = true;
+	boolean isDebugMode = false;
 	double maxStrokeRadius = 8;
 	double minStrokeRadius = 4;
 	double maxStrokeLength = 12;
 	double minStrokeLength = 4;
 	double maxSrokeAngle = 60;
 	double minStrokeAngle = 30;
-	int pixelInterval = 32;
+	int pixelInterval = 4;
 	Utilities ut = new Utilities();
 
 	public FinalProject() {
 		try {
-			image = ImageIO.read(new File("gradient.jpg"));
+			image = ImageIO.read(new File("image.jpg"));
 			/*
 			 * // load and display image that the user specifies JFileChooser chooser = new
 			 * JFileChooser(); FileNameExtensionFilter filter = new
@@ -66,10 +67,12 @@ class FinalProject extends Frame {
 			g2.setStroke(new BasicStroke((int) ut.randomDoubleBetween(minStrokeRadius, maxStrokeRadius)));
 			g2.drawLine((int) line.x1, (int) line.y1, (int) line.x2, (int) line.y2);
 
-			// draw the origin of the line
-			g2.setColor(Color.red);
-			g2.setStroke(new BasicStroke(1));
-			g2.drawLine((int) line.x1, (int) line.y1, (int) line.x1, (int) line.y1);
+			if (isDebugMode) {
+				// draw the origin of the line
+				g2.setColor(Color.red);
+				g2.setStroke(new BasicStroke(1));
+				g2.drawLine((int) line.x1, (int) line.y1, (int) line.x1, (int) line.y1);
+			}
 		}
 	}
 

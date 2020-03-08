@@ -36,13 +36,20 @@ class Utilities {
 		// set an initial lowest distance
 		double lowestDistance = colorDistance(new Color(img.getRGB(x, y)), new Color(pixels.get(0)));
 		int closestPixel = 0;
-		for (int pixel : pixels) {
-			double distance = colorDistance(new Color(img.getRGB(x, y)), new Color(pixel));
+
+		// for each one of the surrounding pixels,
+		System.out.println("Starting pixel " + x + ", " + y);
+		for (int i = 0; i < pixels.size(); i++) {
+			double distance = colorDistance(new Color(img.getRGB(x, y)), new Color(pixels.get(i)));
+			System.out.println(i + ": " + distance);
 			// if this pixel's distance is smaller than the current lowest distance...
 			if (distance < lowestDistance) {
+				// set the new record for lowest distance
+				lowestDistance = distance;
 				// keep track of this pixel's location
-				System.out.println("this pixel is closer");
-				closestPixel = pixels.indexOf(pixel);
+
+				closestPixel = i;
+				System.out.println("Pixel " + closestPixel + " was closer");
 			}
 		}
 
