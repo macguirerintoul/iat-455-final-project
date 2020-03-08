@@ -9,13 +9,11 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.imageio.ImageIO;
 
 class FinalProject extends Frame {
 	BufferedImage image;
 	ArrayList<Line2D.Double> lines;
-	Random random = new Random();
 	int width;
 	int height;
 	double maxStrokeRadius = 12;
@@ -25,6 +23,7 @@ class FinalProject extends Frame {
 	double maxSrokeAngle = 60;
 	double minStrokeAngle = 30;
 	int pixelInterval = 4;
+	Utilities ut = new Utilities();
 
 	public FinalProject() {
 		try {
@@ -59,15 +58,11 @@ class FinalProject extends Frame {
 		System.out.println("Paint completed.");
 	}
 
-	public double randomDoubleBetween(double min, double max) {
-		return random.nextDouble() * (max - min) + min;
-	}
-
 	private void drawLines(ArrayList<Line> lines, Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		for (Line line : lines) {
 			g2.setColor(line.color);
-			g2.setStroke(new BasicStroke((int) randomDoubleBetween(minStrokeRadius, maxStrokeRadius)));
+			g2.setStroke(new BasicStroke((int) ut.randomDoubleBetween(minStrokeRadius, maxStrokeRadius)));
 			g2.drawLine((int) line.x1, (int) line.y1, (int) line.x2, (int) line.y2);
 		}
 	}
@@ -80,8 +75,8 @@ class FinalProject extends Frame {
 			for (int y = 0; y < height; y = y + pixelInterval) {
 				try {
 					// 0 degree angle is vertical
-					double angleInDegrees = randomDoubleBetween(minStrokeAngle, maxSrokeAngle);
-					double length = randomDoubleBetween(minStrokeLength, maxStrokeLength);
+					double angleInDegrees = ut.randomDoubleBetween(minStrokeAngle, maxSrokeAngle);
+					double length = ut.randomDoubleBetween(minStrokeLength, maxStrokeLength);
 					float angle = (float) (angleInDegrees * Math.PI / 180);
 					int endX = (int) (x + length * Math.sin(angle));
 					int endY = (int) (y + length * Math.cos(angle));
