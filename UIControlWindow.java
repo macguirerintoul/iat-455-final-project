@@ -17,6 +17,7 @@ import javax.swing.event.ChangeListener;
  * Demo application panel to display a range slider.
  */
 public class UIControlWindow extends JPanel {
+	private FinalProject finalProject;
 	private RangeSlider radiusSlider = new RangeSlider();
 	private RangeSlider lengthSlider = new RangeSlider();
 
@@ -32,16 +33,14 @@ public class UIControlWindow extends JPanel {
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
 
-	public UIControlWindow() {
+	public UIControlWindow(FinalProject finalProject) {
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
-
+		this.finalProject = finalProject;
 		// RADIUS SLIDER
 		radiusSliderTitle.setText("Stroke radius");
 		radiusSliderLabel1.setText("Lower value:");
 		radiusSliderLabel2.setText("Upper value:");
-		// radiusSliderValue1.setHorizontalAlignment(JLabel.LEFT);
-		// radiusSliderValue2.setHorizontalAlignment(JLabel.LEFT);
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
 		radiusSlider.setMinimum(0);
 		radiusSlider.setMaximum(10);
@@ -51,6 +50,7 @@ public class UIControlWindow extends JPanel {
 				radiusSliderValue1.setText(String.valueOf(slider.getValue()));
 				radiusSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("RADIUS SLIDER CHANGED");
+				finalProject.setRange("radius", slider.getValue(), slider.getUpperValue());
 			}
 		});
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
@@ -70,8 +70,6 @@ public class UIControlWindow extends JPanel {
 		lengthSliderTitle.setText("Stroke length");
 		lengthSliderLabel1.setText("Lower value:");
 		lengthSliderLabel2.setText("Upper value:");
-		// lengthSliderValue1.setHorizontalAlignment(JLabel.LEFT);
-		// lengthSliderValue2.setHorizontalAlignment(JLabel.LEFT);
 		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
 		lengthSlider.setMinimum(0);
 		lengthSlider.setMaximum(10);
@@ -137,17 +135,17 @@ public class UIControlWindow extends JPanel {
 	 * 
 	 * @param args String[]
 	 */
-	public static void main(String[] args) {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+	// public static void main(String[] args) {
+	// try {
+	// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	// } catch (Exception ex) {
+	// ex.printStackTrace();
+	// }
 
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new UIControlWindow().display();
-			}
-		});
-	}
+	// // SwingUtilities.invokeLater(new Runnable() {
+	// // public void run() {
+	// // new UIControlWindow().display();
+	// // }
+	// // });
+	// }
 }

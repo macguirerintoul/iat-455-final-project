@@ -46,7 +46,7 @@ class FinalProject extends Frame {
 		}
 		this.setTitle("Final Project");
 		this.setVisible(true);
-		UIControlWindow uiControls = new UIControlWindow();
+		UIControlWindow uiControls = new UIControlWindow(this);
 		uiControls.display();
 
 		this.addWindowListener(new WindowAdapter() {
@@ -56,8 +56,16 @@ class FinalProject extends Frame {
 		});
 	}
 
-	public static void setSlider(RangeSlider slider, int min, int max) {
-		System.out.println(min + " " + max);
+	public void setRange(String variable, int min, int max) {
+		switch (variable) {
+			case "radius":
+				this.minStrokeRadius = min;
+				this.maxStrokeRadius = max;
+				break;
+			default:
+				break;
+		}
+		repaint();
 	}
 
 	public void paint(final Graphics g) {
