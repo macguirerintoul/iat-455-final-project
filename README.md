@@ -4,4 +4,4 @@
 
 This project would not be possible without:
 
-- [@ernieyu's RangeSlider](https://github.com/ernieyu/Swing-range-slider)
+- @ernieyu's [RangeSlider](https://github.com/ernieyu/Swing-range-slider)
