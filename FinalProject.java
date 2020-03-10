@@ -62,10 +62,11 @@ class FinalProject extends Frame {
 
 	public void paint(final Graphics g) {
 		System.out.println("Calling paint...");
-		/*
-		 * final ArrayList<Line> lines = generateStrokes(image);
-		 * Utilities.shuffle(lines); drawLines(lines, g);
-		 */
+
+		final ArrayList<Line> lines = generateStrokes(image);
+		Utilities.shuffle(lines);
+		drawLines(lines, g);
+
 		System.out.println("Paint completed.");
 	}
 
