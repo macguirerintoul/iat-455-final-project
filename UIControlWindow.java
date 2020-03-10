@@ -130,22 +130,4 @@ public class UIControlWindow extends JPanel {
 		frame.setVisible(true);
 	}
 
-	/**
-	 * Main application method.
-	 * 
-	 * @param args String[]
-	 */
-	// public static void main(String[] args) {
-	// try {
-	// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-	// } catch (Exception ex) {
-	// ex.printStackTrace();
-	// }
-
-	// // SwingUtilities.invokeLater(new Runnable() {
-	// // public void run() {
-	// // new UIControlWindow().display();
-	// // }
-	// // });
-	// }
 }
