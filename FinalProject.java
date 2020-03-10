@@ -20,7 +20,7 @@ class FinalProject extends Frame {
 	boolean isDebugMode = false;
 	double maxStrokeRadius = 12;
 	double minStrokeRadius = 4;
-	double maxStrokeLength = 12;
+	double maxStrokeLength = 20;
 	double minStrokeLength = 4;
 	double maxSrokeAngle = 60;
 	double minStrokeAngle = 30;
@@ -41,23 +41,31 @@ class FinalProject extends Frame {
 			width = image.getWidth();
 			height = image.getHeight();
 			this.setSize(width, height);
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			System.out.println("Cannot load the provided image");
 		}
 		this.setTitle("Final Project");
 		this.setVisible(true);
+		UIControlWindow uiControls = new UIControlWindow();
+		uiControls.display();
+
 		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(final WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 				System.exit(0);
 			}
 		});
 	}
 
+	public static void setSlider(RangeSlider slider, int min, int max) {
+		System.out.println(min + " " + max);
+	}
+
 	public void paint(final Graphics g) {
 		System.out.println("Calling paint...");
-		final ArrayList<Line> lines = generateStrokes(image);
-		Utilities.shuffle(lines);
-		drawLines(lines, g);
+		/*
+		 * final ArrayList<Line> lines = generateStrokes(image);
+		 * Utilities.shuffle(lines); drawLines(lines, g);
+		 */
 		System.out.println("Paint completed.");
 	}
 
