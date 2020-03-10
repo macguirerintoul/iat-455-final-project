@@ -23,21 +23,20 @@ public class UIControlWindow extends JPanel {
 	private JLabel rangeSliderLabel2 = new JLabel();
 	private JLabel rangeSliderValue2 = new JLabel();
 	private RangeSlider radiusSlider = new RangeSlider();
+	private RangeSlider lengthSlider = new RangeSlider();
 
 	public UIControlWindow() {
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
 
+		// RADIUS SLIDER
 		rangeSliderLabel1.setText("Lower value:");
 		rangeSliderLabel2.setText("Upper value:");
 		rangeSliderValue1.setHorizontalAlignment(JLabel.LEFT);
 		rangeSliderValue2.setHorizontalAlignment(JLabel.LEFT);
-
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
 		radiusSlider.setMinimum(0);
 		radiusSlider.setMaximum(10);
-
-		// Add listener to update display.
 		radiusSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				RangeSlider slider = (RangeSlider) e.getSource();
@@ -57,12 +56,36 @@ public class UIControlWindow extends JPanel {
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
 		add(radiusSlider, new GridBagConstraints(0, 2, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+		// LENGTH SLIDER
+		rangeSliderLabel1.setText("Lower value:");
+		rangeSliderLabel2.setText("Upper value:");
+		rangeSliderValue1.setHorizontalAlignment(JLabel.LEFT);
+		rangeSliderValue2.setHorizontalAlignment(JLabel.LEFT);
+		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
+		lengthSlider.setMinimum(0);
+		lengthSlider.setMaximum(10);
+		lengthSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				RangeSlider slider = (RangeSlider) e.getSource();
+				rangeSliderValue1.setText(String.valueOf(slider.getValue()));
+				rangeSliderValue2.setText(String.valueOf(slider.getUpperValue()));
+				System.out.println("LENGTH SLIDER CHANGED");
+			}
+		});
+
+		add(lengthSlider, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
 	}
 
 	public void display() {
 		// Initialize values.
 		radiusSlider.setValue(3);
 		radiusSlider.setUpperValue(7);
+
+		lengthSlider.setValue(3);
+		lengthSlider.setUpperValue(7);
 
 		// Initialize value display.
 		rangeSliderValue1.setText(String.valueOf(radiusSlider.getValue()));
