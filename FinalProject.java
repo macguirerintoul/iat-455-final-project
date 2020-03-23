@@ -56,11 +56,15 @@ class FinalProject extends Frame {
 		});
 	}
 
-	public void setRange(String variable, int min, int max) {
-		switch (variable) {
-			case "radius":
+	public void setRange(Parameter param, int min, int max) {
+		switch (param) {
+			case radius:
 				this.minStrokeRadius = min;
 				this.maxStrokeRadius = max;
+				break;
+			case length:
+				this.minStrokeLength = min;
+				this.maxStrokeLength = max;
 				break;
 			default:
 				break;

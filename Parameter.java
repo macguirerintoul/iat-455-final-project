@@ -1,0 +1,3 @@
+enum Parameter {
+	radius, length
+}

@@ -50,7 +50,7 @@ public class UIControlWindow extends JPanel {
 				radiusSliderValue1.setText(String.valueOf(slider.getValue()));
 				radiusSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("RADIUS SLIDER CHANGED");
-				finalProject.setRange("radius", slider.getValue(), slider.getUpperValue());
+				finalProject.setRange(Parameter.radius, slider.getValue(), slider.getUpperValue());
 			}
 		});
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
@@ -79,6 +79,7 @@ public class UIControlWindow extends JPanel {
 				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
 				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("LENGTH SLIDER CHANGED");
+				finalProject.setRange(Parameter.length, slider.getValue(), slider.getUpperValue());
 			}
 		});
 		JLabel divider = new JLabel();
