@@ -11,22 +11,41 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
-class FinalProject extends Frame {
-	BufferedImage image;
-	ArrayList<Line2D.Double> lines;
-	int width;
-	int height;
+/**
+ * The main class of the application.
+ * 
+ * @author Macguire Rintoul
+ * @author https://macguire.me
+ */
+public class FinalProject extends Frame {
+	BufferedImage image; // holds the image loaded for processing
+	ArrayList<Line2D.Double> lines; // holds the list of generated 'strokes'
+	int width; // width of the loaded image
+	int height; // height of the loaded image
+	/**
+	 * Whether or not the stroke direction is determined by the surrounding colour
+	 * gradient
+	 */
 	boolean isOrientationByGradient = true;
-	boolean isDebugMode = false;
-	double maxStrokeRadius = 12;
-	double minStrokeRadius = 4;
-	double maxStrokeLength = 20;
-	double minStrokeLength = 4;
-	double maxSrokeAngle = 60;
-	double minStrokeAngle = 30;
-	int pixelInterval = 4;
-	Utilities ut = new Utilities();
+	boolean isDebugMode = false; // enable for debugging features
+	Utilities ut = new Utilities(); // utility functions
 
+	/*
+	 * EXPOSED PARAMETERS
+	 */
+	double maxStrokeRadius = 12; // maximum stroke radius
+	double minStrokeRadius = 4; // minimum stroke radius
+	double maxStrokeLength = 20; // maximum stroke length
+	double minStrokeLength = 4; // minimum stroke length
+	double maxSrokeAngle = 60; // maximum stroke angle (if isOrientationByGradient is false)
+	double minStrokeAngle = 30; // minimum stroke angle (if isOrientationByGradient is false)
+	int pixelInterval = 4; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
+
+	/**
+	 * Creates the FinalProject class.
+	 * 
+	 * @return FinalProject
+	 */
 	public FinalProject() {
 		try {
 			image = ImageIO.read(new File("image.jpg"));
@@ -56,6 +75,14 @@ class FinalProject extends Frame {
 		});
 	}
 
+	/**
+	 * Sets the allowed range of values for a given application parameter (e.g.
+	 * radius)
+	 * 
+	 * @param param one of the app parameters
+	 * @param min   the minimum allowed value for the parameter
+	 * @param max   the maximum allowed value for the parameter
+	 */
 	public void setRange(Parameter param, int min, int max) {
 		switch (param) {
 			case radius:
@@ -82,6 +109,12 @@ class FinalProject extends Frame {
 		System.out.println("Paint completed.");
 	}
 
+	/**
+	 * Render the given lines in the application.
+	 * 
+	 * @param lines the generated strokes to be drawn
+	 * @param g
+	 */
 	private void drawLines(final ArrayList<Line> lines, final Graphics g) {
 		final Graphics2D g2 = (Graphics2D) g;
 		for (final Line line : lines) {
@@ -99,6 +132,12 @@ class FinalProject extends Frame {
 		}
 	}
 
+	/**
+	 * Generate strokes based on the given image
+	 * 
+	 * @param img the image to generate strokes for
+	 * @return the list of generated lines that will later be drawn
+	 */
 	private ArrayList<Line> generateStrokes(final BufferedImage img) {
 		System.out.println("Generating strokes...");
 		final ArrayList<Line> lines = new ArrayList<Line>();
