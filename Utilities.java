@@ -4,21 +4,46 @@ import java.util.Random;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+/**
+ * Utility functions used in the project.
+ * 
+ * @author Macguire Rintoul
+ * @author https://macguire.me
+ */
 class Utilities {
 	Random random = new Random();
 
+	/**
+	 * Generate a random double between two values.
+	 * 
+	 * @param min the minimum value of the returned double
+	 * @param max the maximum value of the returned double
+	 * @return a double between the provided values
+	 */
 	public double randomDoubleBetween(double min, double max) {
 		return random.nextDouble() * (max - min) + min;
 	}
 
-	// Generic function to randomize a list using Collections.shuffle() in Java
-	// https://www.techiedelight.com/shuffle-randomize-list-java/
+	/**
+	 * Shuffle an ArrayList. From
+	 * https://www.techiedelight.com/shuffle-randomize-list-java/
+	 * 
+	 * @param list the ArrayList to shuffle
+	 */
 	public static <T> void shuffle(ArrayList<T> list) {
 		Collections.shuffle(list);
 	}
 
+	/**
+	 * Computes the 'distance' between one colour and another. Based on Thiadmer
+	 * Riemersma's paper at https://www.compuphase.com/cmetric.htm. Implementation
+	 * from https://stackoverflow.com/a/6334454/8517613
+	 * 
+	 * @param c1 one colour to compare
+	 * @param c2 the other colour to compare
+	 * @return the distance between the colours
+	 */
 	double colorDistance(Color c1, Color c2) {
-		// from https://stackoverflow.com/a/6334454/8517613
 		int red1 = c1.getRed();
 		int red2 = c2.getRed();
 		int rmean = (red1 + red2) >> 1;
@@ -28,8 +53,15 @@ class Utilities {
 		return Math.sqrt((((512 + rmean) * r * r) >> 8) + 4 * g * g + (((767 - rmean) * b * b) >> 8));
 	}
 
+	/**
+	 * Determine the angle that a stroke should have for a given pixel.
+	 * 
+	 * @param img the image to analyze
+	 * @param x   the x coordinate of the pixel to analyze
+	 * @param y   the y coordinate of the pixel to analyze
+	 * @return the angle that the stroke should be
+	 */
 	public double getOrientationForPixel(BufferedImage img, int x, int y) {
-		// determine the 'colour distance' of each pixel around the center pixel
 		ArrayList<Integer> pixels = new ArrayList<Integer>(8);
 		pixels.add(img.getRGB(x - 1, y - 1));
 		pixels.add(img.getRGB(x, y - 1));

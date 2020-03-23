@@ -160,7 +160,7 @@ public class FinalProject extends Frame {
 					final int endY = (int) (y + length * Math.cos(angle));
 					lines.add(new Line(x, y, endX, endY, new Color(image.getRGB(x, y))));
 				} catch (final Exception e) {
-					// print exception
+					System.out.println(e);
 				}
 			}
 		}

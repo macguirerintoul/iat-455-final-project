@@ -14,7 +14,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Demo application panel to display a range slider.
+ * UI controls to interact with the FinalProject class.
+ * 
+ * @author Ernie Yu
+ * @author https://github.com/ernieyu
+ * 
+ * @author Macguire Rintoul
+ * @author https://macguire.me
  */
 public class UIControlWindow extends JPanel {
 	private FinalProject finalProject;
@@ -102,6 +108,7 @@ public class UIControlWindow extends JPanel {
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 	}
 
+	/** Display the UI control window with some default settings. */
 	public void display() {
 		// Initialize values.
 		radiusSlider.setValue(3);
@@ -117,9 +124,6 @@ public class UIControlWindow extends JPanel {
 		lengthSliderValue1.setText(String.valueOf(lengthSlider.getValue()));
 		lengthSliderValue2.setText(String.valueOf(lengthSlider.getUpperValue()));
 
-		//
-
-		//
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
