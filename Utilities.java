@@ -77,7 +77,7 @@ class Utilities {
 		int closestPixel = 0;
 
 		// for each one of the surrounding pixels,
-		System.out.println("Starting pixel " + x + ", " + y);
+		// System.out.println("Starting pixel " + x + ", " + y);
 		for (int i = 0; i < pixels.size(); i++) {
 			double distance = colorDistance(new Color(img.getRGB(x, y)), new Color(pixels.get(i)));
 			// System.out.println(i + ": " + distance);

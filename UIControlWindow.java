@@ -1,11 +1,11 @@
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+
+import java.awt.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -41,6 +41,8 @@ public class UIControlWindow extends JPanel implements ActionListener {
 	private JLabel lengthSliderValue1 = new JLabel();
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
+
+	private Checkbox constantColour = new Checkbox("Strokes follow constant colour", true);
 	private JButton exportButton = new JButton("Export");
 	private JButton applyButton = new JButton("Apply");
 
@@ -67,6 +69,34 @@ public class UIControlWindow extends JPanel implements ActionListener {
 			}
 		});
 
+		// create length slider
+		lengthSliderTitle.setText("Stroke length");
+		lengthSliderLabel1.setText("Lower value:");
+		lengthSliderLabel2.setText("Upper value:");
+		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
+		lengthSlider.setMinimum(0);
+		lengthSlider.setMaximum(10);
+		lengthSlider.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				RangeSlider slider = (RangeSlider) e.getSource();
+				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
+				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
+				System.out.println("LENGTH SLIDER CHANGED");
+
+			}
+		});
+
+		// Add action listeners
+		applyButton.addActionListener(this);
+
+		exportButton.addActionListener(this);
+		constantColour.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				System.out.println(e.getStateChange() == 1 ? "checked" : "unchecked");
+			}
+		});
+
+		// Add UI elements to window
 		// Row 0
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
@@ -87,23 +117,6 @@ public class UIControlWindow extends JPanel implements ActionListener {
 		add(radiusSlider, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-		// create length slider
-		lengthSliderTitle.setText("Stroke length");
-		lengthSliderLabel1.setText("Lower value:");
-		lengthSliderLabel2.setText("Upper value:");
-		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
-		lengthSlider.setMinimum(0);
-		lengthSlider.setMaximum(10);
-		lengthSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				RangeSlider slider = (RangeSlider) e.getSource();
-				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
-				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
-				System.out.println("LENGTH SLIDER CHANGED");
-
-			}
-		});
-
 		// Row 4
 		add(divider, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
 				new Insets(0, 0, 3, 3), 0, 0));
@@ -123,19 +136,23 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 		add(lengthSliderValue2, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
+
 		// Row 8
 		add(lengthSlider, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
 		// Row 9
-		// setup export button
-		add(exportButton, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
-		exportButton.addActionListener(this);
+		add(constantColour, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
 		// Row 10
-		// setup apply button
 		add(applyButton, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
-		applyButton.addActionListener(this);
+
+		// Row 11
+		add(exportButton, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+
 	}
 
 	@Override
@@ -154,6 +171,7 @@ public class UIControlWindow extends JPanel implements ActionListener {
 	private void apply() {
 		finalProject.setRange(Parameter.radius, radiusSlider.getValue(), radiusSlider.getUpperValue());
 		finalProject.setRange(Parameter.length, lengthSlider.getValue(), lengthSlider.getUpperValue());
+		finalProject.isOrientationByGradient = constantColour.getState();
 	}
 
 	/** Display the UI control window with some default settings. */
