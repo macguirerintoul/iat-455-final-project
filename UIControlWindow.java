@@ -35,18 +35,20 @@ public class UIControlWindow extends JPanel implements ActionListener {
 	private JLabel radiusSliderValue1 = new JLabel();
 	private JLabel radiusSliderLabel2 = new JLabel();
 	private JLabel radiusSliderValue2 = new JLabel();
-
+	private JLabel divider = new JLabel();
 	private JLabel lengthSliderTitle = new JLabel();
 	private JLabel lengthSliderLabel1 = new JLabel();
 	private JLabel lengthSliderValue1 = new JLabel();
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
-	private JButton export = new JButton("Export");
+	private JButton exportButton = new JButton("Export");
+	private JButton applyButton = new JButton("Apply");
 
 	public UIControlWindow(FinalProject finalProject) {
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
+		divider.setText("--------------");
 
 		/* create radius slider */
 		radiusSliderTitle.setText("Stroke radius");
@@ -64,16 +66,24 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				finalProject.setRange(Parameter.radius, slider.getValue(), slider.getUpperValue());
 			}
 		});
+
+		// Row 0
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+
+		// Row 1
 		add(radiusSliderLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 		add(radiusSliderValue1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
+
+		// Row 2
 		add(radiusSliderLabel2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 		add(radiusSliderValue2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
+
+		// Row 3
 		add(radiusSlider, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
@@ -93,37 +103,49 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				finalProject.setRange(Parameter.length, slider.getValue(), slider.getUpperValue());
 			}
 		});
-		JLabel divider = new JLabel();
-		divider.setText("--------------");
 
+		// Row 4
 		add(divider, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
 				new Insets(0, 0, 3, 3), 0, 0));
 
+		// Row 5
 		add(lengthSliderTitle, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+
+		// Row 6
 		add(lengthSliderLabel1, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 		add(lengthSliderValue1, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
+
+		// Row 7
 		add(lengthSliderLabel2, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 		add(lengthSliderValue2, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
+		// Row 8
 		add(lengthSlider, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+		// Row 9
 		// setup export button
-		add(export, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-				new Insets(0, 0, 3, 3), 0, 0));
-		export.addActionListener(this);
+		add(exportButton, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+		exportButton.addActionListener(this);
+		// Row 10
+		// setup apply button
+		add(applyButton, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+		applyButton.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		JButton clickedButton = (JButton) event.getSource();
-		if (clickedButton == export) {
+		if (clickedButton == exportButton) {
 			// capture the button
 			finalProject.captureComponent(finalProject);
+		} else if (clickedButton == applyButton) {
+			/* Apply the new values to finalProject */
 		}
 	}
 
