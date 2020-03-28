@@ -4,7 +4,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +25,7 @@ import javax.swing.event.ChangeListener;
  * @author Macguire Rintoul
  * @author https://macguire.me
  */
-public class UIControlWindow extends JPanel {
+public class UIControlWindow extends JPanel implements ActionListener {
 	private FinalProject finalProject;
 	private RangeSlider radiusSlider = new RangeSlider();
 	private RangeSlider lengthSlider = new RangeSlider();
@@ -39,11 +42,14 @@ public class UIControlWindow extends JPanel {
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
 
+	private JButton export = new JButton("Export");
+
 	public UIControlWindow(FinalProject finalProject) {
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
-		// RADIUS SLIDER
+
+		/* create radius slider */
 		radiusSliderTitle.setText("Stroke radius");
 		radiusSliderLabel1.setText("Lower value:");
 		radiusSliderLabel2.setText("Upper value:");
@@ -72,7 +78,7 @@ public class UIControlWindow extends JPanel {
 		add(radiusSlider, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-		// LENGTH SLIDER
+		// create length slider
 		lengthSliderTitle.setText("Stroke length");
 		lengthSliderLabel1.setText("Lower value:");
 		lengthSliderLabel2.setText("Upper value:");
@@ -106,6 +112,20 @@ public class UIControlWindow extends JPanel {
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
 		add(lengthSlider, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+
+		// setup export button
+		add(export, new GridBagConstraints(0, 9, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
+				new Insets(0, 0, 3, 3), 0, 0));
+		export.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent event) {
+		JButton clickedButton = (JButton) event.getSource();
+		if (clickedButton == export) {
+			// capture the button
+			finalProject.captureComponent(finalProject);
+		}
 	}
 
 	/** Display the UI control window with some default settings. */

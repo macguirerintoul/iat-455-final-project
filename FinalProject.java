@@ -8,8 +8,11 @@ import java.awt.event.WindowEvent;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import java.awt.Component;
+import java.awt.Rectangle;
 
 /**
  * The main class of the application.
@@ -22,17 +25,13 @@ public class FinalProject extends Frame {
 	ArrayList<Line2D.Double> lines; // holds the list of generated 'strokes'
 	int width; // width of the loaded image
 	int height; // height of the loaded image
-	/**
-	 * Whether or not the stroke direction is determined by the surrounding colour
-	 * gradient
-	 */
-	boolean isOrientationByGradient = true;
 	boolean isDebugMode = false; // enable for debugging features
 	Utilities ut = new Utilities(); // utility functions
 
 	/*
 	 * EXPOSED PARAMETERS
 	 */
+	boolean isOrientationByGradient = true; // stroke angle determined by surrounding gradient? T/F
 	double maxStrokeRadius = 12; // maximum stroke radius
 	double minStrokeRadius = 4; // minimum stroke radius
 	double maxStrokeLength = 20; // maximum stroke length
@@ -75,6 +74,23 @@ public class FinalProject extends Frame {
 		});
 	}
 
+	public void captureComponent(Component component) {
+		Rectangle rect = component.getBounds();
+
+		try {
+			String format = "png";
+			String fileName = component.getName() + "." + format;
+			BufferedImage captureImage = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_ARGB);
+			component.paint(captureImage.getGraphics());
+
+			ImageIO.write(captureImage, format, new File(fileName));
+
+			System.out.printf("The screenshot of %s was saved!", component.getName());
+		} catch (IOException ex) {
+			System.err.println(ex);
+		}
+	}
+
 	/**
 	 * Sets the allowed range of values for a given application parameter (e.g.
 	 * radius)
@@ -105,7 +121,6 @@ public class FinalProject extends Frame {
 		final ArrayList<Line> lines = generateStrokes(image);
 		Utilities.shuffle(lines);
 		drawLines(lines, g);
-
 		System.out.println("Paint completed.");
 	}
 
