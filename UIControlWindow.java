@@ -68,8 +68,8 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		radiusSliderLabel1.setText("Lower value:");
 		radiusSliderLabel2.setText("Upper value:");
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
-		radiusSlider.setMinimum(0);
-		radiusSlider.setMaximum(10);
+		radiusSlider.setMinimum((int) finalProject.minAllowedStrokeRadius);
+		radiusSlider.setMaximum((int) finalProject.maxAllowedStrokeRadius);
 		radiusSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				RangeSlider slider = (RangeSlider) e.getSource();
@@ -84,8 +84,8 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		lengthSliderLabel1.setText("Lower value:");
 		lengthSliderLabel2.setText("Upper value:");
 		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
-		lengthSlider.setMinimum(0);
-		lengthSlider.setMaximum(10);
+		lengthSlider.setMinimum((int) finalProject.minAllowedStrokeLength);
+		lengthSlider.setMaximum((int) finalProject.maxAllowedStrokeLength);
 		lengthSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				RangeSlider slider = (RangeSlider) e.getSource();
@@ -97,7 +97,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 
 		// Add action listeners
 		applyButton.addActionListener(this);
-
 		exportButton.addActionListener(this);
 		constantColour.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -105,20 +104,22 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 			}
 		});
 
+		Insets insets = new Insets(0, 0, 3, 3);
+
 		// Add UI elements to window
 		// Row 0
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 1
 		add(radiusSliderLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 		add(radiusSliderValue1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
 
 		// Row 2
 		add(radiusSliderLabel2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 		add(radiusSliderValue2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
 
@@ -130,17 +131,17 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 
 		// Row 5
 		add(lengthSliderTitle, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 6
 		add(lengthSliderLabel1, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 		add(lengthSliderValue1, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
 
 		// Row 7
 		add(lengthSliderLabel2, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 		add(lengthSliderValue2, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
 
@@ -154,19 +155,19 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 
 		// Row 10
 		add(applyButton, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 11
 		add(exportButton, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 12
 		add(pixelIntervalSliderTitle, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 13
 		add(pixelIntervalSlider, new GridBagConstraints(0, 13, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 	}
 
 	public void stateChanged(ChangeEvent e) {
