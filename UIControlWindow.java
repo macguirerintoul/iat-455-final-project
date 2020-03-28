@@ -41,7 +41,6 @@ public class UIControlWindow extends JPanel implements ActionListener {
 	private JLabel lengthSliderValue1 = new JLabel();
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
-
 	private JButton export = new JButton("Export");
 
 	public UIControlWindow(FinalProject finalProject) {
