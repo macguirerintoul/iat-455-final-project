@@ -30,7 +30,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private FinalProject finalProject;
 	private RangeSlider radiusSlider = new RangeSlider();
 	private RangeSlider lengthSlider = new RangeSlider();
-	private JSlider pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, 1, 8, 4);
+	private JSlider pixelIntervalSlider;
 
 	private JLabel radiusSliderTitle = new JLabel();
 	private JLabel radiusSliderLabel1 = new JLabel();
@@ -55,6 +55,8 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		this.finalProject = finalProject;
 
 		pixelIntervalSliderTitle.setText("Pixel interval");
+		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
+				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
 		pixelIntervalSlider.setMajorTickSpacing(1);
 		pixelIntervalSlider.addChangeListener(this);
 		pixelIntervalSlider.setPaintTicks(true);

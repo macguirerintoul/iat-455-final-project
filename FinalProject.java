@@ -28,8 +28,12 @@ public class FinalProject extends Frame {
 	boolean isDebugMode = false; // enable for debugging features
 	Utilities ut = new Utilities(); // utility functions
 
-	int minPixelInterval = 1; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
-	int maxPixelInterval = 8; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
+	int minAllowedPixelInterval = 1; // minimum allowed pixels between strokes
+	int maxAllowedPixelInterval = 8; // maximum allowed pixels between strokes
+	double minAllowedStrokeRadius = 1; // minimum allowed stroke radius
+	double maxAllowedStrokeRadius = 16; // maximum allowed stroke radius
+	double maxAllowedStrokeLength = 20; // maximum allowed stroke length
+	double minAllowedStrokeLength = 1; // minimum allowed stroke length
 
 	/*
 	 * EXPOSED PARAMETERS
