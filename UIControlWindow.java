@@ -63,7 +63,7 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				radiusSliderValue1.setText(String.valueOf(slider.getValue()));
 				radiusSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("RADIUS SLIDER CHANGED");
-				finalProject.setRange(Parameter.radius, slider.getValue(), slider.getUpperValue());
+
 			}
 		});
 
@@ -100,7 +100,7 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
 				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("LENGTH SLIDER CHANGED");
-				finalProject.setRange(Parameter.length, slider.getValue(), slider.getUpperValue());
+
 			}
 		});
 
@@ -146,7 +146,14 @@ public class UIControlWindow extends JPanel implements ActionListener {
 			finalProject.captureComponent(finalProject);
 		} else if (clickedButton == applyButton) {
 			/* Apply the new values to finalProject */
+			apply();
 		}
+	}
+
+	/** Apply the slider values to the finalProject class. */
+	private void apply() {
+		finalProject.setRange(Parameter.radius, radiusSlider.getValue(), radiusSlider.getUpperValue());
+		finalProject.setRange(Parameter.length, lengthSlider.getValue(), lengthSlider.getUpperValue());
 	}
 
 	/** Display the UI control window with some default settings. */
