@@ -37,14 +37,15 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private JLabel radiusSliderValue1 = new JLabel();
 	private JLabel radiusSliderLabel2 = new JLabel();
 	private JLabel radiusSliderValue2 = new JLabel();
-	private JLabel divider = new JLabel();
 	private JLabel lengthSliderTitle = new JLabel();
 	private JLabel lengthSliderLabel1 = new JLabel();
 	private JLabel lengthSliderValue1 = new JLabel();
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
+	private JLabel pixelIntervalSliderTitle = new JLabel();
 
 	private Checkbox constantColour = new Checkbox("Strokes follow constant colour", true);
+
 	private JButton exportButton = new JButton("Export");
 	private JButton applyButton = new JButton("Apply");
 
@@ -52,8 +53,14 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
-		divider.setText("--------------");
+
+		pixelIntervalSliderTitle.setText("Pixel interval");
+		pixelIntervalSlider.setMajorTickSpacing(1);
 		pixelIntervalSlider.addChangeListener(this);
+		pixelIntervalSlider.setPaintTicks(true);
+		pixelIntervalSlider.setPaintLabels(true);
+		pixelIntervalSlider.setSnapToTicks(true);
+
 		/* create radius slider */
 		radiusSliderTitle.setText("Stroke radius");
 		radiusSliderLabel1.setText("Lower value:");
@@ -83,7 +90,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
 				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("LENGTH SLIDER CHANGED");
-
 			}
 		});
 
@@ -119,8 +125,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
 		// Row 4
-		add(divider, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE,
-				new Insets(0, 0, 3, 3), 0, 0));
 
 		// Row 5
 		add(lengthSliderTitle, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
@@ -155,7 +159,11 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 
 		// Row 12
-		add(pixelIntervalSlider, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+		add(pixelIntervalSliderTitle, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+
+		// Row 13
+		add(pixelIntervalSlider, new GridBagConstraints(0, 13, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 	}
 
