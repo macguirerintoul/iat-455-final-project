@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -25,10 +26,11 @@ import javax.swing.event.ChangeListener;
  * @author Macguire Rintoul
  * @author https://macguire.me
  */
-public class UIControlWindow extends JPanel implements ActionListener {
+public class UIControlWindow extends JPanel implements ActionListener, ChangeListener {
 	private FinalProject finalProject;
 	private RangeSlider radiusSlider = new RangeSlider();
 	private RangeSlider lengthSlider = new RangeSlider();
+	private JSlider pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, 1, 8, 4);
 
 	private JLabel radiusSliderTitle = new JLabel();
 	private JLabel radiusSliderLabel1 = new JLabel();
@@ -51,7 +53,7 @@ public class UIControlWindow extends JPanel implements ActionListener {
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
 		divider.setText("--------------");
-
+		pixelIntervalSlider.addChangeListener(this);
 		/* create radius slider */
 		radiusSliderTitle.setText("Stroke radius");
 		radiusSliderLabel1.setText("Lower value:");
@@ -65,7 +67,6 @@ public class UIControlWindow extends JPanel implements ActionListener {
 				radiusSliderValue1.setText(String.valueOf(slider.getValue()));
 				radiusSliderValue2.setText(String.valueOf(slider.getUpperValue()));
 				System.out.println("RADIUS SLIDER CHANGED");
-
 			}
 		});
 
@@ -153,6 +154,16 @@ public class UIControlWindow extends JPanel implements ActionListener {
 		add(exportButton, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
 
+		// Row 12
+		add(pixelIntervalSlider, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 3, 3), 0, 0));
+	}
+
+	public void stateChanged(ChangeEvent e) {
+		JSlider source = (JSlider) e.getSource();
+		if (!source.getValueIsAdjusting()) {
+			System.out.println("pixel interval slider changed");
+		}
 	}
 
 	@Override
@@ -169,6 +180,7 @@ public class UIControlWindow extends JPanel implements ActionListener {
 
 	/** Apply the slider values to the finalProject class. */
 	private void apply() {
+		finalProject.pixelInterval = pixelIntervalSlider.getValue();
 		finalProject.setRange(Parameter.radius, radiusSlider.getValue(), radiusSlider.getUpperValue());
 		finalProject.setRange(Parameter.length, lengthSlider.getValue(), lengthSlider.getUpperValue());
 		finalProject.isOrientationByGradient = constantColour.getState();

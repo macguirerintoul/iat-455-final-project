@@ -28,6 +28,9 @@ public class FinalProject extends Frame {
 	boolean isDebugMode = false; // enable for debugging features
 	Utilities ut = new Utilities(); // utility functions
 
+	int minPixelInterval = 1; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
+	int maxPixelInterval = 8; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
+
 	/*
 	 * EXPOSED PARAMETERS
 	 */

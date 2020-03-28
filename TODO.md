@@ -4,9 +4,11 @@
 - expand colvolve operation to use 5x5
 - checkbox for constant colour orientation
 - slider for min/max angle if constant colour is disabled
-- slider for pixelinterval
+- default and min/max values for sliders
 
 ### IN PROGRESS
+
+- slider for pixelinterval
 
 ### DONE
 
