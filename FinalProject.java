@@ -29,22 +29,22 @@ public class FinalProject extends Frame {
 	Utilities ut = new Utilities(); // utility functions
 
 	int minAllowedPixelInterval = 1; // minimum allowed pixels between strokes
-	int maxAllowedPixelInterval = 8; // maximum allowed pixels between strokes
-	double minAllowedStrokeRadius = 1; // minimum allowed stroke radius
-	double maxAllowedStrokeRadius = 16; // maximum allowed stroke radius
-	double maxAllowedStrokeLength = 20; // maximum allowed stroke length
-	double minAllowedStrokeLength = 1; // minimum allowed stroke length
+	int maxAllowedPixelInterval = 12; // maximum allowed pixels between strokes
+	int minAllowedStrokeRadius = 1; // minimum allowed stroke radius
+	int maxAllowedStrokeRadius = 16; // maximum allowed stroke radius
+	int maxAllowedStrokeLength = 20; // maximum allowed stroke length
+	int minAllowedStrokeLength = 1; // minimum allowed stroke length
 
 	/*
 	 * EXPOSED PARAMETERS
 	 */
 	boolean isOrientationByGradient = true; // stroke angle determined by surrounding gradient? T/F
-	double maxStrokeRadius = 12; // maximum stroke radius
-	double minStrokeRadius = 4; // minimum stroke radius
-	double maxStrokeLength = 20; // maximum stroke length
-	double minStrokeLength = 4; // minimum stroke length
-	double maxSrokeAngle = 60; // maximum stroke angle (if isOrientationByGradient is false)
-	double minStrokeAngle = 30; // minimum stroke angle (if isOrientationByGradient is false)
+	int maxStrokeRadius = 12; // maximum stroke radius
+	int minStrokeRadius = 4; // minimum stroke radius
+	int maxStrokeLength = 20; // maximum stroke length
+	int minStrokeLength = 4; // minimum stroke length
+	int maxSrokeAngle = 60; // maximum stroke angle (if isOrientationByGradient is false)
+	int minStrokeAngle = 30; // minimum stroke angle (if isOrientationByGradient is false)
 	int pixelInterval = 4; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
 
 	/**

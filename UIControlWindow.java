@@ -85,9 +85,11 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		lengthSlider.setValue((int) finalProject.minStrokeLength);
 		lengthSlider.setUpperValue((int) finalProject.maxStrokeLength);
 
-		// Add action listeners
+		// Add action listeners to buttons
 		applyButton.addActionListener(this);
 		exportButton.addActionListener(this);
+
+		// Add item listeners to checkboxes
 		constantColour.addItemListener(this);
 
 		Insets insets = new Insets(0, 0, 3, 3);
@@ -186,14 +188,18 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		}
 	}
 
-	@Override
+	/**
+	 * Called when a button is clicked.
+	 * 
+	 * @param event the event associated with the click
+	 */
 	public void actionPerformed(ActionEvent event) {
 		JButton clickedButton = (JButton) event.getSource();
 		if (clickedButton == exportButton) {
-			// capture the button
+			// Export the finalProject window to an iamge
 			finalProject.captureComponent(finalProject);
 		} else if (clickedButton == applyButton) {
-			/* Apply the new values to finalProject */
+			// Apply the current control values to finalProject
 			apply();
 		}
 	}
