@@ -86,14 +86,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
 		lengthSlider.setMinimum((int) finalProject.minAllowedStrokeLength);
 		lengthSlider.setMaximum((int) finalProject.maxAllowedStrokeLength);
-		lengthSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				RangeSlider slider = (RangeSlider) e.getSource();
-				lengthSliderValue1.setText(String.valueOf(slider.getValue()));
-				lengthSliderValue2.setText(String.valueOf(slider.getUpperValue()));
-				System.out.println("LENGTH SLIDER CHANGED");
-			}
-		});
+		lengthSlider.addChangeListener(this);
 
 		// Add action listeners
 		applyButton.addActionListener(this);
@@ -171,10 +164,16 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	}
 
 	public void stateChanged(ChangeEvent e) {
-		JSlider source = (JSlider) e.getSource();
-		if (!source.getValueIsAdjusting()) {
-			System.out.println("pixel interval slider changed");
+		if (e.getSource() == lengthSlider) {
+			lengthSliderValue1.setText(String.valueOf(lengthSlider.getValue()));
+			lengthSliderValue2.setText(String.valueOf(lengthSlider.getUpperValue()));
+			System.out.println("LENGTH SLIDER CHANGED");
+		} else if (e.getSource() == pixelIntervalSlider) {
+			if (!pixelIntervalSlider.getValueIsAdjusting()) {
+				System.out.println("pixel interval slider changed");
+			}
 		}
+
 	}
 
 	@Override
