@@ -26,7 +26,7 @@ import javax.swing.event.ChangeListener;
  * @author Macguire Rintoul
  * @author https://macguire.me
  */
-public class UIControlWindow extends JPanel implements ActionListener, ChangeListener {
+public class UIControlWindow extends JPanel implements ActionListener, ChangeListener, ItemListener {
 	private FinalProject finalProject;
 	private RangeSlider radiusSlider = new RangeSlider();
 	private RangeSlider lengthSlider = new RangeSlider();
@@ -70,14 +70,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
 		radiusSlider.setMinimum((int) finalProject.minAllowedStrokeRadius);
 		radiusSlider.setMaximum((int) finalProject.maxAllowedStrokeRadius);
-		radiusSlider.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				RangeSlider slider = (RangeSlider) e.getSource();
-				radiusSliderValue1.setText(String.valueOf(slider.getValue()));
-				radiusSliderValue2.setText(String.valueOf(slider.getUpperValue()));
-				System.out.println("RADIUS SLIDER CHANGED");
-			}
-		});
+		radiusSlider.addChangeListener(this);
 
 		// create length slider
 		lengthSliderTitle.setText("Stroke length");
@@ -91,11 +84,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		// Add action listeners
 		applyButton.addActionListener(this);
 		exportButton.addActionListener(this);
-		constantColour.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				System.out.println(e.getStateChange() == 1 ? "checked" : "unchecked");
-			}
-		});
+		constantColour.addItemListener(this);
 
 		Insets insets = new Insets(0, 0, 3, 3);
 
@@ -163,17 +152,24 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				GridBagConstraints.NONE, insets, 0, 0));
 	}
 
+	public void itemStateChanged(ItemEvent e) {
+		System.out.println(e.getStateChange() == 1 ? "checked" : "unchecked");
+	}
+
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == lengthSlider) {
 			lengthSliderValue1.setText(String.valueOf(lengthSlider.getValue()));
 			lengthSliderValue2.setText(String.valueOf(lengthSlider.getUpperValue()));
 			System.out.println("LENGTH SLIDER CHANGED");
+		} else if (e.getSource() == radiusSlider) {
+			radiusSliderValue1.setText(String.valueOf(radiusSlider.getValue()));
+			radiusSliderValue2.setText(String.valueOf(radiusSlider.getUpperValue()));
+			System.out.println("RADIUS SLIDER CHANGED");
 		} else if (e.getSource() == pixelIntervalSlider) {
 			if (!pixelIntervalSlider.getValueIsAdjusting()) {
 				System.out.println("pixel interval slider changed");
 			}
 		}
-
 	}
 
 	@Override
