@@ -70,6 +70,8 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
 		radiusSlider.setMinimum((int) finalProject.minAllowedStrokeRadius);
 		radiusSlider.setMaximum((int) finalProject.maxAllowedStrokeRadius);
+		radiusSlider.setValue((int) finalProject.minStrokeRadius);
+		radiusSlider.setUpperValue((int) finalProject.maxStrokeRadius);
 		radiusSlider.addChangeListener(this);
 
 		// create length slider
@@ -80,6 +82,8 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		lengthSlider.setMinimum((int) finalProject.minAllowedStrokeLength);
 		lengthSlider.setMaximum((int) finalProject.maxAllowedStrokeLength);
 		lengthSlider.addChangeListener(this);
+		lengthSlider.setValue((int) finalProject.minStrokeLength);
+		lengthSlider.setUpperValue((int) finalProject.maxStrokeLength);
 
 		// Add action listeners
 		applyButton.addActionListener(this);
@@ -152,10 +156,20 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				GridBagConstraints.NONE, insets, 0, 0));
 	}
 
+	/**
+	 * Called when a checkbox state is changed.
+	 * 
+	 * @param e the event associated with the state change
+	 */
 	public void itemStateChanged(ItemEvent e) {
 		System.out.println(e.getStateChange() == 1 ? "checked" : "unchecked");
 	}
 
+	/**
+	 * Called when a slider is changed.
+	 * 
+	 * @param e the event associated with the change
+	 */
 	public void stateChanged(ChangeEvent e) {
 		if (e.getSource() == lengthSlider) {
 			lengthSliderValue1.setText(String.valueOf(lengthSlider.getValue()));
@@ -192,19 +206,11 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		finalProject.isOrientationByGradient = constantColour.getState();
 	}
 
-	/** Display the UI control window with some default settings. */
+	/** Display the UI control window. */
 	public void display() {
-		// Initialize values.
-		radiusSlider.setValue(3);
-		radiusSlider.setUpperValue(7);
-
-		lengthSlider.setValue(3);
-		lengthSlider.setUpperValue(7);
-
-		// Initialize value display.
+		// Display the current values of the sliders
 		radiusSliderValue1.setText(String.valueOf(radiusSlider.getValue()));
 		radiusSliderValue2.setText(String.valueOf(radiusSlider.getUpperValue()));
-
 		lengthSliderValue1.setText(String.valueOf(lengthSlider.getValue()));
 		lengthSliderValue2.setText(String.valueOf(lengthSlider.getUpperValue()));
 
@@ -218,5 +224,4 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
-
 }
