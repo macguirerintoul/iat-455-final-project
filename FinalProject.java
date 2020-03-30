@@ -49,7 +49,7 @@ public class FinalProject extends Frame {
 	int pixelInterval = 4; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
 
 	/**
-	 * Creates the FinalProject class.
+	 * Create the FinalProject class.
 	 * 
 	 * @return FinalProject
 	 */
@@ -82,6 +82,11 @@ public class FinalProject extends Frame {
 		});
 	}
 
+	/**
+	 * Capture a screenshot of a component and save it to a file.
+	 * 
+	 * @param component the component to capture
+	 */
 	public void captureComponent(Component component) {
 		Rectangle rect = component.getBounds();
 
@@ -100,12 +105,12 @@ public class FinalProject extends Frame {
 	}
 
 	/**
-	 * Sets the allowed range of values for a given application parameter (e.g.
+	 * Set the range of values for a given application parameter (e.g. stroke
 	 * radius)
 	 * 
 	 * @param param one of the app parameters
-	 * @param min   the minimum allowed value for the parameter
-	 * @param max   the maximum allowed value for the parameter
+	 * @param min   the minimum value for the parameter
+	 * @param max   the maximum value for the parameter
 	 */
 	public void setRange(Parameter param, int min, int max) {
 		switch (param) {
@@ -123,6 +128,11 @@ public class FinalProject extends Frame {
 		repaint();
 	}
 
+	/**
+	 * Paint the app window.
+	 * 
+	 * @param g
+	 */
 	public void paint(final Graphics g) {
 		System.out.println("Calling paint...");
 		final ArrayList<Line> lines = generateStrokes(image);
@@ -192,6 +202,11 @@ public class FinalProject extends Frame {
 		return lines;
 	}
 
+	/**
+	 * Start the app.
+	 * 
+	 * @param args arguments
+	 */
 	public static void main(final String[] args) {
 		System.out.println("Calling main...");
 		new FinalProject();

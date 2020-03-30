@@ -1,19 +1,14 @@
-
 import java.awt.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -27,11 +22,12 @@ import javax.swing.event.ChangeListener;
  * @author https://macguire.me
  */
 public class UIControlWindow extends JPanel implements ActionListener, ChangeListener, ItemListener {
-	private FinalProject finalProject;
-	private RangeSlider radiusSlider = new RangeSlider();
-	private RangeSlider lengthSlider = new RangeSlider();
-	private JSlider pixelIntervalSlider;
+	private FinalProject finalProject; // reference to the finalProject
+	private RangeSlider radiusSlider = new RangeSlider(); // double-input slider to control stroke radius
+	private RangeSlider lengthSlider = new RangeSlider(); // double-input slider to control stroke length
+	private JSlider pixelIntervalSlider; // single-input slider to control pixel interval
 
+	// labels for sliders and values
 	private JLabel radiusSliderTitle = new JLabel();
 	private JLabel radiusSliderLabel1 = new JLabel();
 	private JLabel radiusSliderValue1 = new JLabel();
@@ -44,12 +40,19 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private JLabel lengthSliderValue2 = new JLabel();
 	private JLabel pixelIntervalSliderTitle = new JLabel();
 
+	// control whetherstrokes are shuffled before drawing
 	private Checkbox shuffleStrokes = new Checkbox("Shuffle strokes", true);
+	// control whether strokes follow constant colour
 	private Checkbox constantColour = new Checkbox("Strokes follow constant colour", true);
 
-	private JButton exportButton = new JButton("Export");
-	private JButton applyButton = new JButton("Apply");
+	private JButton applyButton = new JButton("Apply"); // apply the current parameters
+	private JButton exportButton = new JButton("Export"); // export the painting to a file
 
+	/**
+	 * Create the UI control window.
+	 * 
+	 * @param finalProject the finalProject instance
+	 */
 	public UIControlWindow(FinalProject finalProject) {
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
@@ -58,6 +61,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		pixelIntervalSliderTitle.setText("Pixel interval");
 		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
 				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
+		pixelIntervalSlider.setPreferredSize(new Dimension(240, 40));
 		pixelIntervalSlider.setMajorTickSpacing(1);
 		pixelIntervalSlider.setPaintTicks(true);
 		pixelIntervalSlider.setPaintLabels(true);
