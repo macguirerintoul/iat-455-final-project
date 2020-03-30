@@ -96,80 +96,93 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		constantColour.addItemListener(this);
 		shuffleStrokes.addItemListener(this);
 
-		Insets insets = new Insets(0, 0, 3, 3);
+		Insets noInsets = new Insets(0, 0, 0, 0);
+		Insets marginTop = new Insets(16, 0, 4, 0);
 
-		// Add UI elements to window
+		/*
+		 * PIXEL INTERVAL SLIDER
+		 */
+
+		// Row 0
+		add(pixelIntervalSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, marginTop, 0, 0));
+
+		// Row 1
+		add(pixelIntervalSlider, new GridBagConstraints(0, 1, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
 
 		/*
 		 * RADIUS SLIDER
 		 */
 
-		// Row 0
-		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-
-		// Row 1
-		add(radiusSliderLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-		add(radiusSliderValue1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-
 		// Row 2
-		add(radiusSliderLabel2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-		add(radiusSliderValue2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(radiusSliderTitle, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, marginTop, 0, 0));
 
 		// Row 3
-		add(radiusSlider, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(radiusSliderLabel1, new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(radiusSliderValue1, new GridBagConstraints(1, 3, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		// Row 4
+		add(radiusSliderLabel2, new GridBagConstraints(0, 4, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(radiusSliderValue2, new GridBagConstraints(1, 4, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		// Row 5
+		add(radiusSlider, new GridBagConstraints(0, 5, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
 		/*
 		 * LENGTH SLIDER
 		 */
-		// Row 4
-		add(shuffleStrokes, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		// Row 5
-		add(lengthSliderTitle, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 6
-		add(lengthSliderLabel1, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-		add(lengthSliderValue1, new GridBagConstraints(1, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
+		add(lengthSliderTitle, new GridBagConstraints(0, 6, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, marginTop, 0, 0));
 
 		// Row 7
-		add(lengthSliderLabel2, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
-		add(lengthSliderValue2, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
+		add(lengthSliderLabel1, new GridBagConstraints(0, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(lengthSliderValue1, new GridBagConstraints(1, 7, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
 
 		// Row 8
-		add(lengthSlider, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-		/*
-		 * CONSTANT COLOUR CHECKBOX
-		 */
+		add(lengthSliderLabel2, new GridBagConstraints(0, 8, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(lengthSliderValue2, new GridBagConstraints(1, 8, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
 		// Row 9
-		add(constantColour, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
+		add(lengthSlider, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		/*
+		 * CHECKBOXES
+		 */
 
 		// Row 10
-		add(applyButton, new GridBagConstraints(0, 10, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(constantColour, new GridBagConstraints(0, 10, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, marginTop, 0, 0));
 
 		// Row 11
-		add(exportButton, new GridBagConstraints(0, 11, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(shuffleStrokes, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		/*
+		 * BUTTONS
+		 */
 
 		// Row 12
-		add(pixelIntervalSliderTitle, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(applyButton, new GridBagConstraints(0, 12, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
 
 		// Row 13
-		add(pixelIntervalSlider, new GridBagConstraints(0, 13, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, insets, 0, 0));
+		add(exportButton, new GridBagConstraints(0, 13, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
 	}
 
 	/**

@@ -1,15 +1,18 @@
 ### TO DO
 
-- refactor UI creation to use arrays of labels etc.
 - expand colvolve operation to use 5x5
 - slider for min/max angle if constant colour is disabled
-- default and min/max values for sliders
+- fix arrangement of UI window
+- reenable file loading
+- handle images larger than screen
 
 ### IN PROGRESS
 
 ### DONE
 
+- add checkbox for shuffling strokes
 - only repaint after clicking apply
 - export to jpg
 - slider for pixelinterval
 - checkbox for constant colour orientation
+- default and min/max values for sliders
