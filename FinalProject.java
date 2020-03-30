@@ -39,6 +39,7 @@ public class FinalProject extends Frame {
 	 * EXPOSED PARAMETERS
 	 */
 	boolean isOrientationByGradient = true; // stroke angle determined by surrounding gradient? T/F
+	boolean isShuffleStrokes = true; // shuffle strokes before drawing? T/F
 	int maxStrokeRadius = 12; // maximum stroke radius
 	int minStrokeRadius = 4; // minimum stroke radius
 	int maxStrokeLength = 20; // maximum stroke length
@@ -124,9 +125,10 @@ public class FinalProject extends Frame {
 
 	public void paint(final Graphics g) {
 		System.out.println("Calling paint...");
-
 		final ArrayList<Line> lines = generateStrokes(image);
-		Utilities.shuffle(lines);
+		if (isShuffleStrokes) {
+			Utilities.shuffle(lines);
+		}
 		drawLines(lines, g);
 		System.out.println("Paint completed.");
 	}

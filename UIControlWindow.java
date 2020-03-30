@@ -44,6 +44,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private JLabel lengthSliderValue2 = new JLabel();
 	private JLabel pixelIntervalSliderTitle = new JLabel();
 
+	private Checkbox shuffleStrokes = new Checkbox("Shuffle strokes", true);
 	private Checkbox constantColour = new Checkbox("Strokes follow constant colour", true);
 
 	private JButton exportButton = new JButton("Export");
@@ -58,7 +59,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
 				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
 		pixelIntervalSlider.setMajorTickSpacing(1);
-		pixelIntervalSlider.addChangeListener(this);
 		pixelIntervalSlider.setPaintTicks(true);
 		pixelIntervalSlider.setPaintLabels(true);
 		pixelIntervalSlider.setSnapToTicks(true);
@@ -72,7 +72,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		radiusSlider.setMaximum((int) finalProject.maxAllowedStrokeRadius);
 		radiusSlider.setValue((int) finalProject.minStrokeRadius);
 		radiusSlider.setUpperValue((int) finalProject.maxStrokeRadius);
-		radiusSlider.addChangeListener(this);
 
 		// create length slider
 		lengthSliderTitle.setText("Stroke length");
@@ -81,9 +80,13 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
 		lengthSlider.setMinimum((int) finalProject.minAllowedStrokeLength);
 		lengthSlider.setMaximum((int) finalProject.maxAllowedStrokeLength);
-		lengthSlider.addChangeListener(this);
 		lengthSlider.setValue((int) finalProject.minStrokeLength);
 		lengthSlider.setUpperValue((int) finalProject.maxStrokeLength);
+
+		// add change listeners to sliders
+		pixelIntervalSlider.addChangeListener(this);
+		lengthSlider.addChangeListener(this);
+		radiusSlider.addChangeListener(this);
 
 		// Add action listeners to buttons
 		applyButton.addActionListener(this);
@@ -91,10 +94,16 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 
 		// Add item listeners to checkboxes
 		constantColour.addItemListener(this);
+		shuffleStrokes.addItemListener(this);
 
 		Insets insets = new Insets(0, 0, 3, 3);
 
 		// Add UI elements to window
+
+		/*
+		 * RADIUS SLIDER
+		 */
+
 		// Row 0
 		add(radiusSliderTitle, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, insets, 0, 0));
@@ -103,20 +112,23 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		add(radiusSliderLabel1, new GridBagConstraints(0, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, insets, 0, 0));
 		add(radiusSliderValue1, new GridBagConstraints(1, 1, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 3, 0), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 2
 		add(radiusSliderLabel2, new GridBagConstraints(0, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, insets, 0, 0));
 		add(radiusSliderValue2, new GridBagConstraints(1, 2, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 6, 0), 0, 0));
+				GridBagConstraints.NONE, insets, 0, 0));
 
 		// Row 3
 		add(radiusSlider, new GridBagConstraints(0, 3, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+				GridBagConstraints.NONE, insets, 0, 0));
+		/*
+		 * LENGTH SLIDER
+		 */
 		// Row 4
-
+		add(shuffleStrokes, new GridBagConstraints(0, 4, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 		// Row 5
 		add(lengthSliderTitle, new GridBagConstraints(0, 5, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, insets, 0, 0));
@@ -136,7 +148,9 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		// Row 8
 		add(lengthSlider, new GridBagConstraints(0, 8, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
-
+		/*
+		 * CONSTANT COLOUR CHECKBOX
+		 */
 		// Row 9
 		add(constantColour, new GridBagConstraints(0, 9, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
@@ -164,7 +178,12 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	 * @param e the event associated with the state change
 	 */
 	public void itemStateChanged(ItemEvent e) {
-		System.out.println(e.getStateChange() == 1 ? "checked" : "unchecked");
+		Checkbox source = (Checkbox) e.getSource();
+		if (source == constantColour) {
+			System.out.println("Constant colour toggled");
+		} else if (source == shuffleStrokes) {
+			System.out.println("Shuffle strokes toggled");
+		}
 	}
 
 	/**
@@ -196,7 +215,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	public void actionPerformed(ActionEvent event) {
 		JButton clickedButton = (JButton) event.getSource();
 		if (clickedButton == exportButton) {
-			// Export the finalProject window to an iamge
+			// Export the finalProject window to an image
 			finalProject.captureComponent(finalProject);
 		} else if (clickedButton == applyButton) {
 			// Apply the current control values to finalProject
@@ -210,6 +229,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		finalProject.setRange(Parameter.radius, radiusSlider.getValue(), radiusSlider.getUpperValue());
 		finalProject.setRange(Parameter.length, lengthSlider.getValue(), lengthSlider.getUpperValue());
 		finalProject.isOrientationByGradient = constantColour.getState();
+		finalProject.isShuffleStrokes = shuffleStrokes.getState();
 	}
 
 	/** Display the UI control window. */
