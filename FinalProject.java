@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  * The main class of the application.
@@ -20,7 +22,7 @@ public class FinalProject extends Frame {
 	ArrayList<Line2D.Double> lines; // holds the list of generated 'strokes'
 	int width; // width of the loaded image
 	int height; // height of the loaded image
-	boolean isDebugMode = false; // enable for debugging features
+	boolean isDebugMode = true; // enable for debugging features
 	Utilities ut = new Utilities(); // utility functions
 
 	int minAllowedPixelInterval = 1; // minimum allowed pixels between strokes
@@ -50,21 +52,22 @@ public class FinalProject extends Frame {
 	 */
 	public FinalProject() {
 		try {
-			image = ImageIO.read(new File("image.jpg"));
-			textureImage = ImageIO.read(new File("texture.png"));
-			/*
-			 * // load and display image that the user specifies JFileChooser chooser = new
-			 * JFileChooser(); FileNameExtensionFilter filter = new
-			 * FileNameExtensionFilter("Images", "jpg", "png");
-			 * chooser.setFileFilter(filter); int returnVal = chooser.showOpenDialog(null);
-			 * if (returnVal == JFileChooser.APPROVE_OPTION) { image =
-			 * ImageIO.read(chooser.getSelectedFile()); }
-			 */
+			if (isDebugMode) {
+				image = ImageIO.read(new File("TestImage.jpg"));
+			} else {
+				JFileChooser chooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png");
+				chooser.setFileFilter(filter);
+				int returnVal = chooser.showOpenDialog(null);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					image = ImageIO.read(chooser.getSelectedFile());
+				}
+			}
 			width = image.getWidth();
 			height = image.getHeight();
 			this.setSize(width, height);
 		} catch (Exception e) {
-			System.out.println("Cannot load the provided image");
+			e.printStackTrace();
 		}
 		this.setTitle("Final Project");
 		this.setVisible(true);

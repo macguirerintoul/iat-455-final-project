@@ -191,10 +191,6 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		add(exportButton, new GridBagConstraints(0, 13, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, noInsets, 0, 0));
 
-		// Row 14
-		add(successMessage, new GridBagConstraints(0, 14, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
-				GridBagConstraints.NONE, noInsets, 0, 0));
-
 	}
 
 	/**
