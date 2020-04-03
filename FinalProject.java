@@ -72,7 +72,7 @@ public class FinalProject extends Frame {
 	private void loadImage() {
 		try {
 			if (isDebugMode) {
-				image = ImageIO.read(new File("uw.jpg"));
+				image = ImageIO.read(new File("TestImage.jpg"));
 			} else {
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png");
