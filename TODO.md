@@ -5,12 +5,11 @@
 
 ### TO DO
 
-- slider for min/max angle if constant colour is disabled
-
 ### IN PROGRESS
 
 ### DONE
 
+- slider for min/max angle if constant colour is disabled
 - test resizing with transparent pngs
 - fix arrangement of UI window
 - reenable file loading
