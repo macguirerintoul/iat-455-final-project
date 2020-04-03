@@ -1,8 +1,4 @@
-import java.awt.Color;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.BasicStroke;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.geom.Line2D;
@@ -11,8 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import java.awt.Component;
-import java.awt.Rectangle;
 
 /**
  * The main class of the application.
@@ -22,6 +16,7 @@ import java.awt.Rectangle;
  */
 public class FinalProject extends Frame {
 	BufferedImage image; // holds the image loaded for processing
+	BufferedImage textureImage; // holds the image loaded for processing
 	ArrayList<Line2D.Double> lines; // holds the list of generated 'strokes'
 	int width; // width of the loaded image
 	int height; // height of the loaded image
@@ -56,6 +51,7 @@ public class FinalProject extends Frame {
 	public FinalProject() {
 		try {
 			image = ImageIO.read(new File("image.jpg"));
+			textureImage = ImageIO.read(new File("texture.png"));
 			/*
 			 * // load and display image that the user specifies JFileChooser chooser = new
 			 * JFileChooser(); FileNameExtensionFilter filter = new
@@ -86,21 +82,24 @@ public class FinalProject extends Frame {
 	 * Capture a screenshot of a component and save it to a file.
 	 * 
 	 * @param component the component to capture
+	 * @return true if image saved successfully
 	 */
-	public void captureComponent(Component component) {
+	public boolean captureComponent(Component component) {
 		Rectangle rect = component.getBounds();
 
 		try {
 			String format = "png";
-			String fileName = component.getName() + "." + format;
+			String fileName = "YourPainting." + format;
 			BufferedImage captureImage = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_ARGB);
 			component.paint(captureImage.getGraphics());
 
 			ImageIO.write(captureImage, format, new File(fileName));
 
 			System.out.printf("The screenshot of %s was saved!", component.getName());
+			return true;
 		} catch (IOException ex) {
 			System.err.println(ex);
+			return false;
 		}
 	}
 

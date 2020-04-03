@@ -3,10 +3,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.concurrent.TimeUnit;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
@@ -58,6 +61,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
 
+		// create pixel interval slider
 		pixelIntervalSliderTitle.setText("Pixel interval");
 		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
 				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
@@ -67,7 +71,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		pixelIntervalSlider.setPaintLabels(true);
 		pixelIntervalSlider.setSnapToTicks(true);
 
-		/* create radius slider */
+		// create radius slider
 		radiusSliderTitle.setText("Stroke radius");
 		radiusSliderLabel1.setText("Lower value:");
 		radiusSliderLabel2.setText("Upper value:");
@@ -187,6 +191,10 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		add(exportButton, new GridBagConstraints(0, 13, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, noInsets, 0, 0));
 
+		// Row 14
+		add(successMessage, new GridBagConstraints(0, 14, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
 	}
 
 	/**
@@ -233,7 +241,10 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		JButton clickedButton = (JButton) event.getSource();
 		if (clickedButton == exportButton) {
 			// Export the finalProject window to an image
-			finalProject.captureComponent(finalProject);
+			if (finalProject.captureComponent(finalProject)) {
+				// Show a dialog with a success message
+				JOptionPane.showMessageDialog(this, "Image saved to the project folder successfully.");
+			}
 		} else if (clickedButton == applyButton) {
 			// Apply the current control values to finalProject
 			apply();

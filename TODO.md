@@ -1,6 +1,10 @@
+### MAYBE
+
+- expand convolve operation to use 5x5
+- add strokes textures
+
 ### TO DO
 
-- expand colvolve operation to use 5x5
 - slider for min/max angle if constant colour is disabled
 - fix arrangement of UI window
 - reenable file loading
@@ -10,6 +14,7 @@
 
 ### DONE
 
+- exported message
 - add checkbox for shuffling strokes
 - only repaint after clicking apply
 - export to jpg
