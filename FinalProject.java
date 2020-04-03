@@ -29,20 +29,22 @@ public class FinalProject extends Frame {
 	int maxAllowedPixelInterval = 12; // maximum allowed pixels between strokes
 	int minAllowedStrokeRadius = 1; // minimum allowed stroke radius
 	int maxAllowedStrokeRadius = 16; // maximum allowed stroke radius
-	int maxAllowedStrokeLength = 20; // maximum allowed stroke length
 	int minAllowedStrokeLength = 1; // minimum allowed stroke length
+	int maxAllowedStrokeLength = 20; // maximum allowed stroke length
+	int minAllowedStrokeAngle = 0; // minimum allowed stroke angle
+	int maxAllowedStrokeAngle = 360; // maximum allowed stroke angle
 
 	/*
 	 * EXPOSED PARAMETERS
 	 */
 	boolean isOrientationByGradient = true; // stroke angle determined by surrounding gradient? T/F
 	boolean isShuffleStrokes = true; // shuffle strokes before drawing? T/F
-	int maxStrokeRadius = 12; // maximum stroke radius
 	int minStrokeRadius = 4; // minimum stroke radius
-	int maxStrokeLength = 20; // maximum stroke length
+	int maxStrokeRadius = 12; // maximum stroke radius
 	int minStrokeLength = 4; // minimum stroke length
-	int maxSrokeAngle = 60; // maximum stroke angle (if isOrientationByGradient is false)
+	int maxStrokeLength = 20; // maximum stroke length
 	int minStrokeAngle = 30; // minimum stroke angle (if isOrientationByGradient is false)
+	int maxStrokeAngle = 60; // maximum stroke angle (if isOrientationByGradient is false)
 	int pixelInterval = 4; // how many pixels between each stroke (e.g. 4 = 0,0 -> 4,0)
 
 	/**
@@ -70,7 +72,7 @@ public class FinalProject extends Frame {
 	private void loadImage() {
 		try {
 			if (isDebugMode) {
-				image = ImageIO.read(new File("uw.png"));
+				image = ImageIO.read(new File("uw.jpg"));
 			} else {
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png");
@@ -171,6 +173,10 @@ public class FinalProject extends Frame {
 				this.minStrokeLength = min;
 				this.maxStrokeLength = max;
 				break;
+			case angle:
+				this.minStrokeAngle = min;
+				this.maxStrokeAngle = max;
+				break;
 			default:
 				break;
 		}
@@ -235,7 +241,7 @@ public class FinalProject extends Frame {
 						angleInDegrees = ut.getOrientationForPixel(img, x, y);
 					} else {
 						// 0 degree angle is vertical
-						angleInDegrees = ut.randomDoubleBetween(minStrokeAngle, maxSrokeAngle);
+						angleInDegrees = ut.randomDoubleBetween(minStrokeAngle, maxStrokeAngle);
 					}
 					angle = (float) Math.toRadians(angleInDegrees);
 

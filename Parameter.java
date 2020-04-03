@@ -5,5 +5,5 @@
  * @author https://macguire.me
  */
 enum Parameter {
-	radius, length
+	radius, length, angle
 }

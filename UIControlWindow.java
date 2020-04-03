@@ -3,8 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +26,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private FinalProject finalProject; // reference to the finalProject
 	private RangeSlider radiusSlider = new RangeSlider(); // double-input slider to control stroke radius
 	private RangeSlider lengthSlider = new RangeSlider(); // double-input slider to control stroke length
+	private RangeSlider angleSlider = new RangeSlider(); // double-input slider to control stroke length
 	private JSlider pixelIntervalSlider; // single-input slider to control pixel interval
 
 	// labels for sliders and values
@@ -36,14 +35,22 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 	private JLabel radiusSliderValue1 = new JLabel();
 	private JLabel radiusSliderLabel2 = new JLabel();
 	private JLabel radiusSliderValue2 = new JLabel();
+
 	private JLabel lengthSliderTitle = new JLabel();
 	private JLabel lengthSliderLabel1 = new JLabel();
 	private JLabel lengthSliderValue1 = new JLabel();
 	private JLabel lengthSliderLabel2 = new JLabel();
 	private JLabel lengthSliderValue2 = new JLabel();
+
+	private JLabel angleSliderTitle = new JLabel();
+	private JLabel angleSliderLabel1 = new JLabel();
+	private JLabel angleSliderValue1 = new JLabel();
+	private JLabel angleSliderLabel2 = new JLabel();
+	private JLabel angleSliderValue2 = new JLabel();
+
 	private JLabel pixelIntervalSliderTitle = new JLabel();
 
-	// control whetherstrokes are shuffled before drawing
+	// control whether strokes are shuffled before drawing
 	private Checkbox shuffleStrokes = new Checkbox("Shuffle strokes", true);
 	// control whether strokes follow constant colour
 	private Checkbox constantColour = new Checkbox("Strokes follow constant colour", true);
@@ -60,11 +67,17 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setLayout(new GridBagLayout());
 		this.finalProject = finalProject;
+		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
+				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
+
+		// add change listeners to sliders
+		pixelIntervalSlider.addChangeListener(this);
+		lengthSlider.addChangeListener(this);
+		radiusSlider.addChangeListener(this);
+		angleSlider.addChangeListener(this);
 
 		// create pixel interval slider
 		pixelIntervalSliderTitle.setText("Pixel interval");
-		pixelIntervalSlider = new JSlider(JSlider.HORIZONTAL, finalProject.minAllowedPixelInterval,
-				finalProject.maxAllowedPixelInterval, finalProject.pixelInterval);
 		pixelIntervalSlider.setPreferredSize(new Dimension(240, 40));
 		pixelIntervalSlider.setMajorTickSpacing(1);
 		pixelIntervalSlider.setPaintTicks(true);
@@ -76,25 +89,30 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		radiusSliderLabel1.setText("Lower value:");
 		radiusSliderLabel2.setText("Upper value:");
 		radiusSlider.setPreferredSize(new Dimension(240, radiusSlider.getPreferredSize().height));
-		radiusSlider.setMinimum((int) finalProject.minAllowedStrokeRadius);
-		radiusSlider.setMaximum((int) finalProject.maxAllowedStrokeRadius);
-		radiusSlider.setValue((int) finalProject.minStrokeRadius);
-		radiusSlider.setUpperValue((int) finalProject.maxStrokeRadius);
+		radiusSlider.setMinimum(finalProject.minAllowedStrokeRadius);
+		radiusSlider.setMaximum(finalProject.maxAllowedStrokeRadius);
+		radiusSlider.setValue(finalProject.minStrokeRadius);
+		radiusSlider.setUpperValue(finalProject.maxStrokeRadius);
 
 		// create length slider
 		lengthSliderTitle.setText("Stroke length");
 		lengthSliderLabel1.setText("Lower value:");
 		lengthSliderLabel2.setText("Upper value:");
 		lengthSlider.setPreferredSize(new Dimension(240, lengthSlider.getPreferredSize().height));
-		lengthSlider.setMinimum((int) finalProject.minAllowedStrokeLength);
-		lengthSlider.setMaximum((int) finalProject.maxAllowedStrokeLength);
-		lengthSlider.setValue((int) finalProject.minStrokeLength);
-		lengthSlider.setUpperValue((int) finalProject.maxStrokeLength);
+		lengthSlider.setMinimum(finalProject.minAllowedStrokeLength);
+		lengthSlider.setMaximum(finalProject.maxAllowedStrokeLength);
+		lengthSlider.setValue(finalProject.minStrokeLength);
+		lengthSlider.setUpperValue(finalProject.maxStrokeLength);
 
-		// add change listeners to sliders
-		pixelIntervalSlider.addChangeListener(this);
-		lengthSlider.addChangeListener(this);
-		radiusSlider.addChangeListener(this);
+		// create angle slider
+		angleSliderTitle.setText("Stroke angle (only used when above is unchecked)");
+		angleSliderLabel1.setText("Lower value:");
+		angleSliderLabel2.setText("Upper value:");
+		angleSlider.setPreferredSize(new Dimension(240, angleSlider.getPreferredSize().height));
+		angleSlider.setMinimum(finalProject.minAllowedStrokeAngle);
+		angleSlider.setMaximum(finalProject.maxAllowedStrokeAngle);
+		angleSlider.setValue(finalProject.minStrokeAngle);
+		angleSlider.setUpperValue(finalProject.maxStrokeAngle);
 
 		// Add action listeners to buttons
 		applyButton.addActionListener(this);
@@ -176,19 +194,39 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 				GridBagConstraints.NONE, marginTop, 0, 0));
 
 		// Row 11
-		add(shuffleStrokes, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+		add(angleSliderTitle, new GridBagConstraints(0, 11, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, marginTop, 0, 0));
+
+		// Row 12
+		add(angleSliderLabel1, new GridBagConstraints(0, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(angleSliderValue1, new GridBagConstraints(1, 12, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		// Row 13
+		add(angleSliderLabel2, new GridBagConstraints(0, 13, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+		add(angleSliderValue2, new GridBagConstraints(1, 13, 1, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		// Row 14
+		add(angleSlider, new GridBagConstraints(0, 14, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+				GridBagConstraints.NONE, noInsets, 0, 0));
+
+		// Row 15
+		add(shuffleStrokes, new GridBagConstraints(0, 15, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, noInsets, 0, 0));
 
 		/*
 		 * BUTTONS
 		 */
 
-		// Row 12
-		add(applyButton, new GridBagConstraints(0, 12, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+		// Row 16
+		add(applyButton, new GridBagConstraints(0, 16, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, noInsets, 0, 0));
 
-		// Row 13
-		add(exportButton, new GridBagConstraints(0, 13, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
+		// Row 17
+		add(exportButton, new GridBagConstraints(0, 17, 2, 1, 0.0, 0.0, GridBagConstraints.NORTHWEST,
 				GridBagConstraints.NONE, noInsets, 0, 0));
 
 	}
@@ -221,6 +259,10 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 			radiusSliderValue1.setText(String.valueOf(radiusSlider.getValue()));
 			radiusSliderValue2.setText(String.valueOf(radiusSlider.getUpperValue()));
 			System.out.println("RADIUS SLIDER CHANGED");
+		} else if (e.getSource() == angleSlider) {
+			angleSliderValue1.setText(String.valueOf(angleSlider.getValue()));
+			angleSliderValue2.setText(String.valueOf(angleSlider.getUpperValue()));
+			System.out.println("angle SLIDER CHANGED");
 		} else if (e.getSource() == pixelIntervalSlider) {
 			if (!pixelIntervalSlider.getValueIsAdjusting()) {
 				System.out.println("pixel interval slider changed");
@@ -252,6 +294,7 @@ public class UIControlWindow extends JPanel implements ActionListener, ChangeLis
 		finalProject.pixelInterval = pixelIntervalSlider.getValue();
 		finalProject.setRange(Parameter.radius, radiusSlider.getValue(), radiusSlider.getUpperValue());
 		finalProject.setRange(Parameter.length, lengthSlider.getValue(), lengthSlider.getUpperValue());
+		finalProject.setRange(Parameter.angle, angleSlider.getValue(), angleSlider.getUpperValue());
 		finalProject.isOrientationByGradient = constantColour.getState();
 		finalProject.isShuffleStrokes = shuffleStrokes.getState();
 	}
