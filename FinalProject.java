@@ -51,9 +51,26 @@ public class FinalProject extends Frame {
 	 * @return FinalProject
 	 */
 	public FinalProject() {
+		loadImage(); // Allow the user to load an image into the app
+		this.setTitle("Final Project"); // Set the title of the painting window
+		this.setVisible(true); // Show the painting window
+		UIControlWindow uiControls = new UIControlWindow(this); // Create the UI control window
+		uiControls.display(); // Show the UI control window
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+	}
+
+	/**
+	 * Allow the user to load an image into the app.
+	 * 
+	 */
+	private void loadImage() {
 		try {
 			if (isDebugMode) {
-				image = ImageIO.read(new File("TestImage.jpg"));
+				image = ImageIO.read(new File("LargeImage.jpg"));
 			} else {
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png");
@@ -63,22 +80,41 @@ public class FinalProject extends Frame {
 					image = ImageIO.read(chooser.getSelectedFile());
 				}
 			}
-			width = image.getWidth();
-			height = image.getHeight();
+
+			// if the image is larger than the screen, scale the image down
+			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+			int screenWidth = gd.getDisplayMode().getWidth();
+			int screenHeight = gd.getDisplayMode().getHeight();
+
+			int imageWidth = image.getWidth();
+			int imageHeight = image.getHeight();
+
+			// If the image is larger than the screen in either orientation...
+			if (imageWidth > screenWidth || imageHeight > screenHeight) {
+				int newWidth = 400;
+				int newHeight = 400;
+
+				// If the image is in landscape orientation...
+				if (imageWidth > imageHeight) {
+					// The new width should be the width of the screen
+					newWidth = screenWidth;
+					// The new height should be...
+					newHeight = (int) (imageHeight * (float) screenHeight / imageHeight);
+				} else {
+					// TODO
+					// Image is in portrait; new height should be the height of the screen
+				}
+				image = resizeImage(image, newWidth, newHeight);
+				width = image.getWidth();
+				height = image.getHeight();
+			} else {
+				width = imageWidth;
+				height = imageHeight;
+			}
 			this.setSize(width, height);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		this.setTitle("Final Project");
-		this.setVisible(true);
-		UIControlWindow uiControls = new UIControlWindow(this);
-		uiControls.display();
-
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 	}
 
 	/**
@@ -95,15 +131,29 @@ public class FinalProject extends Frame {
 			String fileName = "YourPainting." + format;
 			BufferedImage captureImage = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_ARGB);
 			component.paint(captureImage.getGraphics());
-
 			ImageIO.write(captureImage, format, new File(fileName));
-
-			System.out.printf("The screenshot of %s was saved!", component.getName());
+			System.out.printf("The screenshot was saved.");
 			return true;
 		} catch (IOException ex) {
-			System.err.println(ex);
+			ex.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * Resize an image.
+	 * 
+	 * @param originalImage the image to resize
+	 * @param width         the width to resize to
+	 * @param height        the height to resize to
+	 * @return the resized image
+	 */
+	private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
+		BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = resizedImage.createGraphics();
+		g.drawImage(originalImage, 0, 0, width, height, null);
+		g.dispose();
+		return resizedImage;
 	}
 
 	/**
