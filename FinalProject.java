@@ -70,7 +70,7 @@ public class FinalProject extends Frame {
 	private void loadImage() {
 		try {
 			if (isDebugMode) {
-				image = ImageIO.read(new File("LargeImage.jpg"));
+				image = ImageIO.read(new File("uw.jpg"));
 			} else {
 				JFileChooser chooser = new JFileChooser();
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "jpg", "png");
@@ -81,37 +81,34 @@ public class FinalProject extends Frame {
 				}
 			}
 
-			// if the image is larger than the screen, scale the image down
+			// Get the screen size so we can check if the image fits inside it
 			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			int screenWidth = gd.getDisplayMode().getWidth();
 			int screenHeight = gd.getDisplayMode().getHeight();
 
+			// Get the image width
 			int imageWidth = image.getWidth();
 			int imageHeight = image.getHeight();
 
 			// If the image is larger than the screen in either orientation...
 			if (imageWidth > screenWidth || imageHeight > screenHeight) {
-				int newWidth = 400;
-				int newHeight = 400;
-
-				// If the image is in landscape orientation...
-				if (imageWidth > imageHeight) {
-					// The new width should be the width of the screen
-					newWidth = screenWidth;
-					// The new height should be...
-					newHeight = (int) (imageHeight * (float) screenHeight / imageHeight);
-				} else {
-					// TODO
-					// Image is in portrait; new height should be the height of the screen
+				int newWidth = screenWidth; // Try the new width as the size of the screen
+				int newHeight = (int) (imageHeight * (float) screenWidth / imageWidth); // Scale the height accordingly
+				// If the scaled down image is still too tall...
+				if (newHeight > screenHeight) {
+					newHeight = screenHeight; // Scale the height again
+					newWidth = (int) (imageWidth * (float) screenHeight / imageHeight); // Scale the width accordingly
 				}
-				image = resizeImage(image, newWidth, newHeight);
+				image = resizeImage(image, newWidth, newHeight); // Replace the loaded image with the resized image
 				width = image.getWidth();
 				height = image.getHeight();
 			} else {
+				// Image fits in the screen, so proceed as normal
 				width = imageWidth;
 				height = imageHeight;
 			}
-			this.setSize(width, height);
+
+			this.setSize(width, height); // set the window to the final size of the image
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
