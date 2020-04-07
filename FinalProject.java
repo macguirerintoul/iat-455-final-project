@@ -22,7 +22,7 @@ public class FinalProject extends Frame {
 	ArrayList<Line2D.Double> lines; // holds the list of generated 'strokes'
 	int width; // width of the loaded image
 	int height; // height of the loaded image
-	boolean isDebugMode = true; // enable for debugging features
+	boolean isDebugMode = false; // enable for debugging features
 	Utilities ut = new Utilities(); // utility functions
 
 	int minAllowedPixelInterval = 1; // minimum allowed pixels between strokes
